@@ -44,3 +44,11 @@ Here is a list of dependencies that the app currently uses:
   - file path of sound can be found but not accessed at the moment
 - react-native-ffmpeg is used to manipulate recorded audio, however the package only supports mobile
 
+### 4. SnapShots
+- sorry these photos are huge
+![image_123986672](https://user-images.githubusercontent.com/50627842/144575092-d4dcf5d1-3a5c-4131-b6eb-3bc6723c89ce.JPG)
+![image_123986672-3](https://user-images.githubusercontent.com/50627842/144575091-e668f236-cb3b-40b6-8c7e-a76e33a18194.JPG)
+![image_123986672-2](https://user-images.githubusercontent.com/50627842/144575090-c2b6cade-c68d-4a88-ac42-e7de131673d6.JPG)
+
+
+
