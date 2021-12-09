@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { Text, View, StyleSheet, SafeAreaView, Button, ImageBackground, TouchableOpacity, FlatList, ScrollView} from 'react-native';
 import { Audio } from 'expo-av';
 import styles from './styling/createHarmPageStyle.js';
@@ -28,7 +29,10 @@ export default function App({ navigation }) {
 
   const [effect, setEffect] = useState(false);
 
-
+  useEffect(() => {
+    getURI();
+    console.log("useEffect triggered");
+  }, []);
 
   //function to play the recorded audio
   const playRecordedAudio = async () => {
@@ -43,6 +47,7 @@ export default function App({ navigation }) {
       //Play if audio is loaded successfully
       if (playerStatus.isLoaded) {
         if (playerStatus.isPlaying === false) {
+          console.log(AudioPlayer.current);
           AudioPlayer.current.playAsync();
           setPlaying(true);
         }
@@ -101,6 +106,9 @@ export default function App({ navigation }) {
         .then(r => r.blob())
           .then(blobFile => new File([blobFile], "audioBro", {type: "audio/webm"}));
       console.log(file);
+      const objectURL = URL.createObjectURL(file);
+      console.log("objectURL: " + objectURL);
+      setPlayerURI(objectURL);
       setAudioFile(file);
     } catch (error) {
       console.log(error);
@@ -116,7 +124,6 @@ export default function App({ navigation }) {
     }
   }
 
-  getURI();
   console.log("COUNT: " + count);
 
 
@@ -139,8 +146,9 @@ export default function App({ navigation }) {
               >
               </TouchableOpacity>
             </View>
-            <Button title="MAGIC" color="red"/>
+            <Button title="MAGIC" color="red" onPress={() => getFile()}/>
           </View>
+          <Button title="Back" onPress={() => navigation.goBack()}></Button>
         </View>
       </ImageBackground>
     </SafeAreaView>

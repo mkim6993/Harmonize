@@ -23,7 +23,7 @@ function App() {
             headerShown: false
           }}
         >
-        <Stack.Screen name="Wave" component={Animation}/>
+        
         <Stack.Screen name="Directory" component={DirectoryScreen}/><Stack.Screen name="Login" component={LoginScreen}/>
         <Stack.Screen name="Record" component={RecordScreen} />
         <Stack.Screen name="Library" component={LibraryScreen} />
