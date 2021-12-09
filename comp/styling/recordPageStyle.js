@@ -27,7 +27,6 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    marginLeft: '20%'
   },
   triangleRight: {
     backgroundColor: '#e2ef98',
@@ -40,19 +39,20 @@ export default StyleSheet.create({
     backgroundColor: 'transparent',
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
-    borderBottomColor: 'red',
+    borderBottomColor: 'black',
     transform: [{rotate: '90deg'}],
   },
   pauseSymbol: {
     width: 20,
     height: 25,
-    backgroundColor: '#e2ef98',
-    borderColor: 'red',
+    backgroundColor: 'white',
+    borderColor: 'black',
     borderRightWidth: 5,
     borderLeftWidth: 5,
   },
   controls: {
     flexDirection: 'row',
+    alignContent: 'space-around',
   },
   recordButton: {
     justifyContent: 'center',
@@ -92,8 +92,7 @@ export default StyleSheet.create({
   },
   itemView: {
     backgroundColor: 'black',
-    height: '30%',
-    width: '90%',
+    flex: 1,
     borderRadius: 5,
     borderWidth: .5,
     borderColor: 'black',
@@ -104,5 +103,9 @@ export default StyleSheet.create({
     margin: 1,
     justifyContent: 'center',
     borderRadius: 19,
+  },
+  trackAndControls: {
+    width: '85%',
+    height: '50%',
   }
 });

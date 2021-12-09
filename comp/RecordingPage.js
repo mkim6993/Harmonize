@@ -175,9 +175,9 @@ export default function App({ navigation }) {
     }
   }
 
-  function preparePlay(item) {
-    setCurrent(item['id']);
-    setCurrentURI(item['uri']);
+  async function preparePlay(item) {
+    await setCurrent(item['id']);
+    await setCurrentURI(item['uri']);
   }
 
   /*
@@ -237,60 +237,51 @@ export default function App({ navigation }) {
     //setCurrent(item['id']);
     return (
       <TouchableOpacity style={styles.audioItem}>
-        <Text style={{fontSize: 20, color: 'white'}} onPress={() => {preparePlay(item); playRecordedAudio()}}>Track {item['id']}</Text>
+        <Text style={{fontSize: 20, color: 'white'}} onPress={() => {preparePlay(item);}}>Track {item['id']}</Text>
      </TouchableOpacity>
   )}
 
   return (
     <SafeAreaView style={styles.safeArea}>
-        <View style={styles.bigContainer}>
-          <Button
+      <View style={styles.bigContainer}>
+        <Button
             title={"Print Items"}
             color={recording ? "red" : "green"}
             onPress={printItems}
-          />
+        />
+
+
+        <Text>Player: Track {currentAudio} </Text>
+        <Text>playing? {playing}</Text>
+        <Text>currentURI? {currentURI}</Text>
+
+        <View style={styles.trackAndControls}>
           <View style={styles.controls}>
-
-          <Button
-            title={recording ? "Stop" : "Record"}
-            color={recording ? "red" : "green"}
-            onPress={recording ? stopRecording : startRecording}
-          />
-
-
-
-          <View style={styles.playPauseContainer}>
-            <TouchableOpacity
-              style={playing ? styles.pauseSymbol : styles.triangleRight}
-              onPress={playing ? stopPlaying : playRecordedAudio }>
-
-            </TouchableOpacity>
+            <View style={styles.playPauseContainer}>
+              <TouchableOpacity
+                  style={playing ? styles.pauseSymbol : styles.triangleRight}
+                  onPress={playing ? stopPlaying : playRecordedAudio }>
+              </TouchableOpacity>
+            </View>
+            <Button
+                title={recording ? "Stop" : "Record"}
+                color={recording ? "red" : "green"}
+                onPress={recording ? stopRecording : startRecording}
+            />
+            <Button
+                title="Save"
+                color="green"
+                onPress={() => {saveToLocal(); navigation.push('Create')}}
+            />
           </View>
-
-          <Button
-            title="Save"
-            color="green"
-            onPress={() => {saveToLocal(); navigation.push('Create')}}
-          />
-          {/*
-          <Button
-            title="Download"
-            color="green"
-            onPress={downloadURI(currentURI, "test.mp3")}
-          />
-          */}
-          </View>
-          <Text>Player: Track {currentAudio} </Text>
-          <Text>playing? {playing}</Text>
-          <Text>currentURI? {currentURI}</Text>
-
           <View style={styles.itemView}>
               <FlatList
-                data={items}
-                renderItem={renderItem}
+                  data={items}
+                  renderItem={renderItem}
               />
-          </View>
         </View>
+        </View>
+      </View>
     </SafeAreaView>
   );
 }
