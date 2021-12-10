@@ -34,10 +34,10 @@ export default function RecordIt({ navigation}) {
   const [CurrentSong, SetCurrentSong] = React.useState(tracks[0]);
   const sound = React.useRef(new Audio.Sound());
 
-  React.useEffect(() => {
-  LoadAudio();
-    return () => Unload();
-  }, [CurrentSong]);
+  // React.useEffect(() => {
+  // LoadAudio();
+  //   return () => Unload();
+  // }, [CurrentSong]);
 
 
   const Unload = async () => {

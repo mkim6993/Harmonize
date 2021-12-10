@@ -23,8 +23,8 @@ function App() {
             headerShown: false
           }}
         >
-        
-        <Stack.Screen name="Directory" component={DirectoryScreen}/><Stack.Screen name="Login" component={LoginScreen}/>
+        <Stack.Screen name="Login" component={LoginScreen}/>
+        <Stack.Screen name="Directory" component={DirectoryScreen}/>
         <Stack.Screen name="Record" component={RecordScreen} />
         <Stack.Screen name="Library" component={LibraryScreen} />
         <Stack.Screen name="About" component={AboutScreen}/>

@@ -15,23 +15,19 @@ export default function App({ navigation }) {
 
   // states for the UI
   const [playing, setPlaying] = useState(false);
-  const [disablePlay, setDisPlay] = useState(false);
-  const [ogOrNew, setOr] = useState(false); // og = false, new = true
+  const [trackNum, setTrackNum] = useState();
   console.log('reloadcreateHArmonizer');
 
   var count = 0;
 
   const [playerURI, setPlayerURI] = useState(''); // on the player
   const [originalURI, setOriginal] = useState(''); // original audio
-  const [modifiedURI, setModified] = useState(''); // modified audio
 
   const [audioFile, setAudioFile] = useState();
 
-  const [effect, setEffect] = useState(false);
-
   useEffect(() => {
     getURI();
-    console.log("useEffect triggered");
+    console.log("harmonizer useEffect triggered");
   }, []);
 
   //function to play the recorded audio
@@ -90,39 +86,15 @@ export default function App({ navigation }) {
           console.log("URI: " + uri)
           setOriginal(uri);
           setPlayerURI(uri);
-
         }
+        const trackNum = await AsyncStorage.getItem('NUM');
+        setTrackNum(trackNum);
       }
     } catch (error) {
       console.log("couldn't get uri");
       console.log(error);
     }
   };
-
-  // uri -> file
-  const getFile = async () => {
-    try {
-      let file = await fetch(originalURI)
-        .then(r => r.blob())
-          .then(blobFile => new File([blobFile], "audioBro", {type: "audio/webm"}));
-      console.log(file);
-      const objectURL = URL.createObjectURL(file);
-      console.log("objectURL: " + objectURL);
-      setPlayerURI(objectURL);
-      setAudioFile(file);
-    } catch (error) {
-      console.log(error);
-    }
-
-    try {
-      let file2 = await fetch('../music/HarvestMoon.m4a')
-        .then(x => x.blob())
-          .then(blobFile2 => new File([blobFile2], "harvest", {type: "audio/m4a"}));
-      console.log(file2);
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   console.log("COUNT: " + count);
 
@@ -131,6 +103,9 @@ export default function App({ navigation }) {
 
 
   //============================================================================
+
+  const [delay, setDelay] = useState(false);
+
   const AudioContext = window.AudioContext || window.webkitAudioContext;
 
   const audioContext = new AudioContext();
@@ -157,11 +132,16 @@ export default function App({ navigation }) {
     request.send();
   }
 
-  function callPlay(){
-    playSound(dogBarkingBuffer);
-    playSound2(catMeowBuffer);
-    playSound3(meatBuffer);
-    // playSound4(treeBuffer);
+  async function callPlay(){
+    try {
+      await loadSound();
+      playSound(dogBarkingBuffer);
+      playSound2(catMeowBuffer);
+      playSound3(meatBuffer);
+      playSound4(treeBuffer);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   function playSound(buffer) {
@@ -173,59 +153,95 @@ export default function App({ navigation }) {
 }
 
 function playSound2(buffer) {
+  let val = 1;
+  if (delay === false) {
+    val = .8;
+  }
   var source = audioContext.createBufferSource();
   source.buffer = buffer;
   source.detune.value = 400;
-  source.playbackRate.value = .8;
+  source.playbackRate.value = val;
   source.connect(audioContext.destination);
   source.start(0);
 }
 
 function playSound3(buffer) {
+  let val = 1;
+  if (delay === false) {
+    val = .67;
+  }
   var source = audioContext.createBufferSource();
   source.buffer = buffer;
   source.detune.value = 700;
-  source.playbackRate.value = .67;
+  source.playbackRate.value = val;
   source.connect(audioContext.destination);
   source.start(0);
 }
 
 function playSound4(buffer) {
+  let val = 1;
+  if (delay === false) {
+    val = .5;
+  }
   var source = audioContext.createBufferSource();
   source.buffer = buffer;
   source.detune.value = 1100;
-  source.playbackRate.value = .5;
+  source.playbackRate.value = val;
   source.connect(audioContext.destination);
   source.start(0);
 }
 
+function changeDelay() {
+  setDelay(!delay);
+}
 
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ImageBackground source={{uri:'https://cdn.pixabay.com/photo/2021/05/01/21/13/couple-6222077_1280.jpg'}} resizeMode="cover" style={styles.image}>
-        <View style={styles.bigContainer}>
-          <View style={styles.controls}>
-            <View style={styles.playPauseContainer}>
-              <TouchableOpacity
-                style={playing ? styles.pauseSymbol : styles.triangleRight}
-                onPress={playing ? stopPlaying : playRecordedAudio }
-              >
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={playing ? styles.pauseSymbol : styles.triangleRight}
-                onPress={playing ? stopPlaying : playRecordedAudio }
-              >
-              </TouchableOpacity>
+      <View style={styles.bigContainer}>
+        <View style={styles.cdPlayer}>
+          <Text>Player</Text>
+          <View style={styles.trackView}>
+            <View style={styles.trackContainers}>
+              <View style={styles.prevNextTrack}>
+                <Text style={{textAlign: 'center'}}>
+                  Prev: {trackNum -1}
+                </Text>
+              </View>
             </View>
-            <Button title="MAGIC" color="red" onPress={() => getFile()}/>
-            <Button title="WEB AUDIO" color="red" onPress={() => loadSound()}/>
-            <Button title="play WEB" color="red" onPress={() => callPlay()}/>
+            <View style={styles.currentTrack}>
+              <Text style={{fontSize: 50}}>Track: {trackNum}</Text>
+            </View>
+            <View style={styles.trackContainers}>
+              <View style={styles.prevNextTrack}>
+                <Text style={{textAlign: 'center'}}>
+                  Next: {trackNum +1}
+                </Text>
+              </View>
+            </View>
           </View>
-          <Button title="Back" onPress={() => navigation.goBack()}></Button>
         </View>
-      </ImageBackground>
+        <View style={styles.controls}>
+          <View style={styles.playPauseContainer}>
+            <TouchableOpacity
+              style={playing ? styles.pauseSymbol : styles.triangleRight}
+              onPress={playing ? stopPlaying : playRecordedAudio }
+            >
+            </TouchableOpacity>
+          </View>
+          <View style={{width: 10}}></View>
+          <Button title="Harmonized" color="black" onPress={() => callPlay()}/>
+        </View>
+        <View style={styles.options}>
+          <TouchableOpacity onPress={() => changeDelay()}>
+            <Text style={delay ? styles.selected : styles.unselected}>Space Harmony</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => changeDelay()}>
+            <Text style={delay ? styles.unselected : styles.selected}>Delayed Harmony</Text>
+          </TouchableOpacity>
+        </View>
+        <Button title="Pick Another Sound" color='black' onPress={() => navigation.goBack()}></Button>
+      </View>
     </SafeAreaView>
   );
 }

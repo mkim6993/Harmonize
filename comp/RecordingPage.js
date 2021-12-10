@@ -190,10 +190,8 @@ export default function App({ navigation }) {
   // saving URI to local storage
   const saveToLocal = async () => {
     try {
-      await AsyncStorage.setItem(
-        'URI',
-        currentURI
-      );
+      await AsyncStorage.setItem('URI', currentURI);
+      await AsyncStorage.setItem('NUM', currentAudio);
     } catch (error) {
       console.log(error);
     }
@@ -244,33 +242,48 @@ export default function App({ navigation }) {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.bigContainer}>
-        <Button
-            title={"Print Items"}
-            color={recording ? "red" : "green"}
-            onPress={printItems}
-        />
-
-
-        <Text>Player: Track {currentAudio} </Text>
-        <Text>playing? {playing}</Text>
-        <Text>currentURI? {currentURI}</Text>
+        <View style={styles.cdPlayer}>
+          <Text>Player</Text>
+          <View style={styles.trackView}>
+            <View style={styles.trackContainers}>
+              <View style={styles.prevNextTrack}>
+                <Text style={{textAlign: 'center'}}>
+                  Prev: {currentAudio -1}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.currentTrack}>
+              <Text style={{fontSize: 50}}>Track: {currentAudio}</Text>
+            </View>
+            <View style={styles.trackContainers}>
+              <View style={styles.prevNextTrack}>
+                <Text style={{textAlign: 'center'}}>
+                  Next: {currentAudio +1}
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
 
         <View style={styles.trackAndControls}>
           <View style={styles.controls}>
+            <View style={{width: 10}}></View>
             <View style={styles.playPauseContainer}>
               <TouchableOpacity
                   style={playing ? styles.pauseSymbol : styles.triangleRight}
                   onPress={playing ? stopPlaying : playRecordedAudio }>
               </TouchableOpacity>
             </View>
+            <View style={{width: 5}}></View>
             <Button
                 title={recording ? "Stop" : "Record"}
-                color={recording ? "red" : "green"}
+                color={recording ? "red" : "black"}
                 onPress={recording ? stopRecording : startRecording}
             />
+            <View style={{width: 5}}></View>
             <Button
                 title="Save"
-                color="green"
+                color="black"
                 onPress={() => {saveToLocal(); navigation.push('Create')}}
             />
           </View>

@@ -96,6 +96,7 @@ export default StyleSheet.create({
     borderRadius: 5,
     borderWidth: .5,
     borderColor: 'black',
+    marginTop: 5
   },
   audioItem: {
     backgroundColor: 'black',
@@ -107,5 +108,43 @@ export default StyleSheet.create({
   trackAndControls: {
     width: '85%',
     height: '50%',
+  },
+  cdPlayer: {
+    backgroundColor: 'white',
+    height: '35%',
+    width: '75%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  trackView: {
+    height: '95%',
+    width: '100%',
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  currentTrack: {
+    height: '70%',
+    width: '65%',
+    backgroundColor: '#E0EBE7',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 3,
+    borderWidth: .2,
+  },
+  trackContainers: {
+    height: '70%',
+    width: '17%',
+    backgroundColor: 'white',
+    alignItems: 'center',
+  },
+  prevNextTrack: {
+    height: '25%',
+    width: '80%',
+    backgroundColor: '#E0EBE7',
+    borderRadius: 25,
+    borderWidth: .5,
+    justifyContent: 'center',
   }
 });
