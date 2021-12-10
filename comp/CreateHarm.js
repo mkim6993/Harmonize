@@ -128,6 +128,79 @@ export default function App({ navigation }) {
 
 
 
+
+
+  //============================================================================
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+
+  const audioContext = new AudioContext();
+
+  var dogBarkingBuffer = null;
+  var catMeowBuffer = null;
+  var meatBuffer = null;
+  var treeBuffer = null;
+
+  function loadSound() {
+    var request = new XMLHttpRequest();
+    request.open('GET', playerURI, true);
+    request.responseType = 'arraybuffer';
+
+    // Decode asynchronously
+    request.onload = function() {
+      audioContext.decodeAudioData(request.response, function(buffer) {
+        dogBarkingBuffer = buffer;
+        catMeowBuffer = buffer;
+        meatBuffer = buffer;
+        treeBuffer = buffer;
+      },);
+    }
+    request.send();
+  }
+
+  function callPlay(){
+    playSound(dogBarkingBuffer);
+    playSound2(catMeowBuffer);
+    playSound3(meatBuffer);
+    // playSound4(treeBuffer);
+  }
+
+  function playSound(buffer) {
+    var source = audioContext.createBufferSource();
+    source.buffer = buffer;
+    source.playbackRate.value = 1;
+    source.connect(audioContext.destination);
+    source.start(0);
+}
+
+function playSound2(buffer) {
+  var source = audioContext.createBufferSource();
+  source.buffer = buffer;
+  source.detune.value = 400;
+  source.playbackRate.value = .8;
+  source.connect(audioContext.destination);
+  source.start(0);
+}
+
+function playSound3(buffer) {
+  var source = audioContext.createBufferSource();
+  source.buffer = buffer;
+  source.detune.value = 700;
+  source.playbackRate.value = .67;
+  source.connect(audioContext.destination);
+  source.start(0);
+}
+
+function playSound4(buffer) {
+  var source = audioContext.createBufferSource();
+  source.buffer = buffer;
+  source.detune.value = 1100;
+  source.playbackRate.value = .5;
+  source.connect(audioContext.destination);
+  source.start(0);
+}
+
+
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <ImageBackground source={{uri:'https://cdn.pixabay.com/photo/2021/05/01/21/13/couple-6222077_1280.jpg'}} resizeMode="cover" style={styles.image}>
@@ -147,6 +220,8 @@ export default function App({ navigation }) {
               </TouchableOpacity>
             </View>
             <Button title="MAGIC" color="red" onPress={() => getFile()}/>
+            <Button title="WEB AUDIO" color="red" onPress={() => loadSound()}/>
+            <Button title="play WEB" color="red" onPress={() => callPlay()}/>
           </View>
           <Button title="Back" onPress={() => navigation.goBack()}></Button>
         </View>
