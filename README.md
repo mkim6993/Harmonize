@@ -27,10 +27,9 @@ HARMONIZE
   - more info. about Granular synthesis http://pd-tutorial.com/english/ch03s07.html
 
 ### 4. SnapShots
-- sorry these photos are huge
-![image_123986672](https://user-images.githubusercontent.com/50627842/144575092-d4dcf5d1-3a5c-4131-b6eb-3bc6723c89ce.JPG)
-![image_123986672-3](https://user-images.githubusercontent.com/50627842/144575091-e668f236-cb3b-40b6-8c7e-a76e33a18194.JPG)
-![image_123986672-2](https://user-images.githubusercontent.com/50627842/144575090-c2b6cade-c68d-4a88-ac42-e7de131673d6.JPG)
+<img src="https://user-images.githubusercontent.com/50627842/144575092-d4dcf5d1-3a5c-4131-b6eb-3bc6723c89ce.JPG" width="300px">
+<img src="https://user-images.githubusercontent.com/50627842/144575091-e668f236-cb3b-40b6-8c7e-a76e33a18194.JPG" width="300px">
+<img src="https://user-images.githubusercontent.com/50627842/144575090-c2b6cade-c68d-4a88-ac42-e7de131673d6.JPG" width="300px">
 
 VideoDemo
 https://drive.google.com/drive/folders/1T7ES0f3-JHvjDWPLWB42F9ND3yw23C9Q?usp=sharing
